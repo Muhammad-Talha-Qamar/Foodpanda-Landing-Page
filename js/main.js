@@ -4,7 +4,10 @@ if (!reduceMotion) {
   document.querySelectorAll(".reveal").forEach((el) => {
     const group = [...el.parentElement.querySelectorAll(":scope > .reveal")];
     const index = group.indexOf(el);
-    if (index > 0) el.style.setProperty("--d", `${index * 70}ms`);
+    if (index > 0) {
+      const delay = Math.min(index, 5) * 50;
+      el.style.setProperty("--d", `${delay}ms`);
+    }
   });
 
   const revealObserver = new IntersectionObserver((entries) => {
@@ -13,7 +16,7 @@ if (!reduceMotion) {
       entry.target.classList.add("is-in");
       revealObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.16, rootMargin: "0px 0px -6% 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -4% 0px" });
 
   document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 } else {
